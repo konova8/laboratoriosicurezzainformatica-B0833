@@ -1,0 +1,2 @@
+- Reconnaissance: Raccolta di informazioni utili, capisco dove posso attaccare
+- Enumeration: Delimito il perimetro, rendo il test più efficace
