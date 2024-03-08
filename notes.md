@@ -115,3 +115,74 @@ Se riusciamo ad inserire nostro codice in uno degli script lanciati possiamo far
 
 #### `at`
 > `atd` è un demone che si occupa di eseguire un comando dopo una certa quantità di tempo
+
+## Applicazioni Web
+Vulnerabilità:
+- Client side
+- Protocollo
+- Server side
+
+### OWASP
+> The Open Web Application Security Project (OWASP) is a nonprofit foundation that works to improve the security of software.
+
+Stila una classifica sulle vulnerabilità più frequenti
+
+#### A1 - Broken access control
+> Raggruppa varie cause di accesso non correttamente mediato da risorse
+
+- IDOR: Insecure Direct Object Reference
+    - Accesso ad oggetti tramite modifica di un link
+- FD: File Disclosure
+    - Path traversal
+
+#### A2 - Cryptographic failures
+I dati vanno protetti *at rest* e *in transit*, non sempre sono cifrati correttamente (es. nei log)
+
+#### A3 - Injection
+> Invio di input non fidati ad un interprete, possibile impatto molto elevato
+
+- SQL Injection
+- Cross-Site Scripting (XSS): Iniezione di codice lato browser
+    - Reflected: Inserisco in un parametro della query uno script javascript
+    - DOM: Iniezione di codice lato browser, modifico il DOM
+    - Stored: Iniezione di codice malevolo, che spedisce all'attaccante dati nel tempo
+- Pentesting
+    - White box
+    - Black box
+    - Blind Injection (estrazione die dati)
+
+#### A4 - Insecure design
+> Metodi di progetto formalizzati per la sicurezza, paradigma *shift left*
+
+Spostare a sinistra la fase in cui si fa attenzione alla sicurezza
+
+![Shift left paradigm](assets/shift-left-paradigm.png)
+
+#### A5 - Security misconfiguration
+> Errori di configurazione a tutti i livelli dello stack
+
+- Server
+    - Es. Credenziali di default
+    - Es. Uso di XML, nativamente permette riferimenti a risorse esterne
+- Protocollo
+    - Es. Scelta di cifrari deboli per TLS
+    - Es. HTTP e non HTTPS
+- Client
+    - Es. Header lato server errati
+        - `X-Frame-Options`
+            - Controlla l’embedding di risorse con `<frame>`, `<iframe>`, `<object>`
+            - `DENY, SAMEORIGIN, ALLOW-FROM <url>`
+        - `X-XSS-Protection`
+            - filtra i tentativi di reflected Cross Site Scripting (v. A3)
+            - `1 ; mode=block`
+        - `Content-Security-Policy`
+            - previene il caricamento di risorse (es. js) da origini esterne
+            - `default-src 'self'`
+    - Es. Compatibilità browser
+    - Es. Uso di XML, nativamente permette riferimenti a risorse esterne
+
+Soluzioni:
+- Soluzione draastica: Same Origin Polici (SOP)
+    - Troppo limitante
+- Cross-Origin Resource Sharing (CORS)
+    - Rilassa in modo controllato i vincoli SOP, gestendo alcune eccezioni
